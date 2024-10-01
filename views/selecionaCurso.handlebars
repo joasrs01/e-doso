@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleção de Cursos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            font-size: 18px;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 28px;
+        }
+        .course-list {
+            list-style: none;
+            padding: 0;
+        }
+        .course-item {
+            background-color: #e6e6e6;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .course-item h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .course-item p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .enroll-button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .enroll-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Seleção de Cursos</h1>
+    <ul class="course-list">
+        <li class="course-item">
+            <h2>Introdução à Informática</h2>
+            <p>Aprenda o básico sobre computadores, incluindo como ligar, usar o mouse e o teclado.</p>
+            <button class="enroll-button" onclick="enrollCourse('Introdução à Informática')">Inscrever-se</button>
+        </li>
+        <li class="course-item">
+            <h2>Navegação na Internet</h2>
+            <p>Descubra como navegar na internet, usar e-mail e pesquisar informações online.</p>
+            <button class="enroll-button" onclick="enrollCourse('Navegação na Internet')">Inscrever-se</button>
+        </li>
+        <li class="course-item">
+            <h2>Redes Sociais</h2>
+            <p>Aprenda a usar redes sociais como Facebook e WhatsApp para se conectar com amigos e familiares.</p>
+            <button class="enroll-button" onclick="enrollCourse('Redes Sociais')">Inscrever-se</button>
+        </li>
+        <li class="course-item">
+            <h2>Compras Online</h2>
+            <p>Saiba como fazer compras online com segurança em sites confiáveis.</p>
+            <button class="enroll-button" onclick="enrollCourse('Compras Online')">Inscrever-se</button>
+        </li>
+    </ul>
+</div>
+
+<script>
+    function enrollCourse(courseName) {
+        alert('Você se inscreveu no curso: ' + courseName);
+        // Aqui você pode adicionar código para enviar a inscrição ao servidor
+    }
+</script>
+
+</body>
+</html>
