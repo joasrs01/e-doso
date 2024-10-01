@@ -2,6 +2,7 @@ const express = require("express");
 const exphbrs = require("express-handlebars");
 const app = express();
 const porta = 3000;
+const usuarioRouter = require("./routers/usuarioRouter");
 
 app.engine("handlebars", exphbrs.engine());
 app.set("view engine", "handlebars");
@@ -10,6 +11,8 @@ app.use(express.static("public"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/usuario", usuarioRouter);
 
 app.get("/", (req, res) => {
   //res.send("Olá servidor!");
