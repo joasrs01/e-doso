@@ -1,7 +1,7 @@
 
 <div id="container-login">
     <h1>Acesse sua conta!</h1>
-    <div id="container-info-login">
+    <div id="card-padrao container-info-login">
         <form id="form-login" action="/usuario/login" method="POST">
             <div class="form-control-bsp">
             {{!-- <label for="login">Acesse sua conta!</label> --}}
@@ -10,12 +10,12 @@
             <div class="form-control-bsp">
                 <input class="txt-padrao-bsp" type="password" name="senha" placeholder="Senha">
             </div>
-            <input class="btn btn-primary" type="submit" value="Login">
+            <input class="btn btn-primary btn-login" type="submit" value="Login">
             {{!-- <div id="msg-login-invalido" {{#if esconderMsgInvalido}} hidden="true" {{/if}}> --}}
             {{!-- <span style="color:#b62222;">Login ou senha incorretos!</span> --}}
             </div>
             <div id="link-nova-conta">
-                <a href="/usuario/add">ou crie uma conta clicado aqui!</a>
+                <a href="/usuario">ou crie uma conta clicado aqui!</a>
             </div>
         </form>
     </div>
