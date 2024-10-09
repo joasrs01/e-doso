@@ -4,11 +4,16 @@ const app = express();
 const porta = 3000;
 const usuarioRouter = require("./routers/usuarioRouter");
 const cursoRouter = require("./routers/cursoRouter");
+const tokenService = require("./controllers/tokenService");
+const cookieParser = require("cookie-parser");
 
 app.engine("handlebars", exphbrs.engine());
 app.set("view engine", "handlebars");
 
 app.use(express.static("public"));
+
+// para utilizar cookies
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -16,9 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/usuario", usuarioRouter);
 app.use("/curso", cursoRouter);
 
-app.get("/", (req, res) => {
+app.get("/", tokenService.verificarToken, (req, res) => {
   //res.send("Olá servidor!");
-  res.render("principal");
+  res.render("principal", { usuarioAutenticado: req.usuario });
 });
 
 app.listen(porta, (err) => {

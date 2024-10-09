@@ -1,8 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const usuarioModel = require("../model/usuarioModel");
+const usuarioController = require("../controllers/usuarioController");
+const tokenService = require("../controllers/tokenService");
 
-router.get("/", usuarioModel.cadastroUsuario);
-router.get("/login", usuarioModel.login);
+router.get("/add", usuarioController.abrirCadastroUsuario);
+router.get("/login", tokenService.verificarToken, usuarioController.abrirLogin);
+router.get("/logoff", usuarioController.logoffUsuario);
+router.get(
+  "/perfil",
+  tokenService.verificarTokenThrow,
+  usuarioController.perfilUsuario
+);
+router.get(
+  "/perfil/:id",
+  tokenService.verificarToken,
+  usuarioController.perfilUsuario
+);
+router.post("/add", usuarioController.cadastrarUsuario);
+router.post("/login", usuarioController.autenticarUsuario);
 
 module.exports = router;

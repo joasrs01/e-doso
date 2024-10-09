@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const cursoModel = require("../model/cursoModel");
+const cursoModel = require("../controllers/cursoController");
+const tokenService = require("../controllers/tokenService");
 
-router.get("/", cursoModel.selecionaCurso);
+router.get("/", tokenService.verificarToken, cursoModel.selecionaCurso);
 
 module.exports = router;

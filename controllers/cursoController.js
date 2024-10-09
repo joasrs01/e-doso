@@ -1,5 +1,5 @@
 module.exports = class CursoModel {
   static async selecionaCurso(req, res) {
-    res.render("selecionaCurso");
+    res.render("curso/selecionaCurso", { usuarioAutenticado: req.usuario });
   }
 };
