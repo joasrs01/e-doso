@@ -150,4 +150,14 @@ color: #10151E;
 h1 {
     text-align: center;
 }
+
+.span-msg-invalido {
+    color: #ff3434;
+    font-size: smaller;
+  }
+
+  .form-control-invalido {
+    border-color: #ff3434;
+    border-radius: 5px; 
+  }
   
