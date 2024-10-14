@@ -17,4 +17,9 @@ const Inscricao = sequelize.define('Inscricao', {
   }
 });
 
+Inscricao.sync()
+  //.sync({ force: true })
+  .then(() => console.log("Tabela Usuario Sincronizada com sucesso!"))
+  .catch((err) => console.log("erro ao sincronizar a tabela Usuario: " + err));
+
 module.exports = Inscricao;
