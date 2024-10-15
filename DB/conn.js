@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
 const conexao = new Sequelize(
-  "postgres://postgres:joaS12012022@localhost/DB_Node",
+  "postgres://postgres:123456@localhost/DB_Node",
   {
     host: "localhost",
     dialect: "postgres",

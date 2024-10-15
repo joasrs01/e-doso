@@ -1,14 +1,42 @@
 const express = require("express");
-const exphbrs = require("express-handlebars");
+// const exphbs = require('express-handlebars');
+const path = require('path');
+
+
+// const express = require('express');
+const { engine } = require('express-handlebars');
+
 const app = express();
 const porta = 3000;
 const usuarioRouter = require("./routers/usuarioRouter");
 const cursoRouter = require("./routers/cursoRouter");
 const tokenService = require("./controllers/tokenService");
+const comentarioRoutes = require('./routers/comentarioRoutes');
 const cookieParser = require("cookie-parser");
+const Comentario = require('./models/comentarioModel');
 
-app.engine("handlebars", exphbrs.engine());
-app.set("view engine", "handlebars");
+// app.engine("handlebars", exphbrs.engine());
+// app.set("view engine", "handlebars");
+
+// Configuração do Handlebars
+app.engine('handlebars', engine({
+  defaultLayout: 'main',
+  layoutsDir: path.join(__dirname, 'views', 'layouts'),
+  helpers: {
+    formatDate: function (date) {
+      if (!date) return '';
+      return new Date(date).toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+  }
+}));
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static("public"));
 
@@ -20,6 +48,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/usuario", usuarioRouter);
 app.use("/curso", cursoRouter);
+app.use('/', comentarioRoutes);
 
 app.get("/", tokenService.verificarToken, (req, res) => {
   //res.send("Olá servidor!");

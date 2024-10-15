@@ -1,4 +1,4 @@
-const conexao = require('./conexao'); // Certifique-se de ajustar o caminho se necessário
+const conexao = require('./DB/conn'); // Certifique-se de ajustar o caminho se necessário
 
 const queries = [
     'DELETE FROM "Cursos";',
