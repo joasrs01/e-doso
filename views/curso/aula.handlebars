@@ -1,0 +1,10 @@
+
+<h2>Aulas do Curso: {{cursoDescricao}}</h2>
+
+{{#each aulas}}
+  <div class="aula">
+    <h3>{{this.titulo}}</h3>
+    <iframe src="{{this.videoUrl}}" frameborder="0" allowfullscreen></iframe>
+    <p>{{this.descricao}}</p>
+  </div>
+{{/each}}
