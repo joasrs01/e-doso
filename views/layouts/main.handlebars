@@ -9,15 +9,15 @@
 </head>
 <body>
     <nav id="navbar">
-        <h2 style="margin: 0px;"><a id="nav-titulo" href="/">E-doso</a></h2>
+        <h2 style="margin: 0px;"><a class="nav-titulo" href="/">E-doso</a></h2>
         <ul id="ul-navbar" style="margin: 0px;">
-            <li class="li-navbar"><a id="nav-titulo" href="/curso">Cursos</a></li>
+            <li class="li-navbar"><a class="nav-titulo" href="/curso">Cursos</a></li>
             {{#if usuarioAutenticado}}
-                <li class="li-navbar"><a id="nav-titulo" href="/usuario/perfil">{{usuarioAutenticado.userName}}</a></li>
-                <li class="li-navbar"><a id="nav-titulo" href="/usuario/logoff">Logoff</a></li>
+                <li class="li-navbar"><a class="nav-titulo" href="/usuario/perfil">{{usuarioAutenticado.userName}}</a></li>
+                <li class="li-navbar"><a class="nav-titulo" href="/usuario/logoff">Logoff</a></li>
             {{else}}
-                <li class="li-navbar"><a id="nav-titulo" href="/usuario/login">Login</a></li>
-                <li class="li-navbar"><a id="nav-titulo" href="/usuario/add">Cadastro</a></li>
+                <li class="li-navbar"><a class="nav-titulo" href="/usuario/login">Login</a></li>
+                <li class="li-navbar"><a class="nav-titulo" href="/usuario/add">Cadastro</a></li>
             {{/if}}
         </ul>
     </nav>

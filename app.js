@@ -23,7 +23,8 @@ app.use("/curso", cursoRouter);
 
 app.get("/", tokenService.verificarToken, (req, res) => {
   //res.send("Olá servidor!");
-  res.render("principal", { usuarioAutenticado: req.usuario });
+  res.redirect("curso/");
+  //res.render("principal", { usuarioAutenticado: req.usuario });
 });
 
 app.listen(porta, (err) => {
