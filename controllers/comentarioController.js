@@ -41,5 +41,5 @@ module.exports = class ComentarioController {
       res.status(500).json({ message: "Erro ao adicionar comentário", error: error.message });
     }
   }
-  
+
 };
