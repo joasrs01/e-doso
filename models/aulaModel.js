@@ -1,34 +1,28 @@
+const { DataTypes } = require("sequelize");
+const sequelize = require("../DB/conn");
+const Curso = require("./cursoModel");
 
-const { DataTypes } = require('sequelize');
-const sequelize = require('../DB/conn');
-
-const Aula = sequelize.define('Aula', {
+const Aula = sequelize.define("Aula", {
   titulo: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   descricao: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   videoUrl: {
     type: DataTypes.STRING,
-    allowNull: false
-  },
-  cursoId: {
-    type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: 'Cursos', // Supondo que você já tenha um modelo de curso
-      key: 'id'
-    }
-  }
+  },
 });
 
+Aula.belongsTo(Curso);
+Curso.hasMany(Aula);
 
 Aula.sync()
   //.sync({ force: true })
-  .then(() => console.log("Tabela Usuario Sincronizada com sucesso!"))
-  .catch((err) => console.log("erro ao sincronizar a tabela Usuario: " + err));
+  .then(() => console.log("Tabela Aula Sincronizada com sucesso!"))
+  .catch((err) => console.log("erro ao sincronizar a tabela Aula: " + err));
 
 module.exports = Aula;

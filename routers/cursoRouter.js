@@ -1,13 +1,18 @@
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const cursoController = require('../controllers/cursoController');
+const cursoController = require("../controllers/cursoController");
+const tokenService = require("../controllers/tokenService");
 
-// Rota para a página de cursos
-router.get('/', (req, res) => {
-  res.render('curso/selecionaCurso', { title: 'Seleção de Cursos' });
-});
-
-router.get('/aula/:cursoId', cursoController.verAulas);
+router.get("/", tokenService.verificarToken, cursoController.verCursos);
+router.get(
+  "/visualizarAulas/:cursoId",
+  tokenService.verificarToken,
+  cursoController.verAulas
+);
+router.get(
+  "/aula/:aulaId",
+  tokenService.verificarTokenThrow,
+  cursoController.visualizarAula
+);
 
 module.exports = router;

@@ -1,0 +1,22 @@
+<div class="container-aula">
+    <div class="div-aula-curso card-padrao">
+      <h1>{{curso.titulo}}</h1>
+      <span>{{curso.descricao}}</span>
+      <input type="button" value="Increver-se" class="btn-visualizar">
+    </div>
+    <div class="div-aula">
+        <ul class="course-list">
+        {{#each aulas}}
+            <li class="course-item">
+            <div class="div-curso">
+                <div class="div-info-aula">
+                    <h2>{{this.titulo}}</h2>
+                    <span style="margin-bottom: 20px;">{{this.descricao}}</span>
+                    <a href="/curso/aula/{{this.id}}" class="btn-visualizar">Iniciar</a>
+                </div>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+    </div>
+</div>

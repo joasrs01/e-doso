@@ -1,10 +1,12 @@
-
-<h2>Aulas do Curso: {{cursoDescricao}}</h2>
-
-{{#each aulas}}
-  <div class="aula">
-    <h3>{{this.titulo}}</h3>
-    <iframe src="{{this.videoUrl}}" frameborder="0" allowfullscreen></iframe>
-    <p>{{this.descricao}}</p>
-  </div>
-{{/each}}
+<div class="container-visualiza-aula">
+    <div class="div-visualiza-aula card-padrao">
+      <h1>{{aula.titulo}}</h1>
+      <span>{{aula.descricao}}</span>
+      <iframe width="560" height="315" 
+                src="{{aula.videoUrl}}" 
+                title="YouTube video player" frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; 
+                encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+    </div>
+</div>

@@ -55,8 +55,8 @@ li {
 }
 .course-item {
     background-color: #e6e6e6;
-    margin: 10px 0;
-    padding: 15px;
+    margin-bottom: 10px;
+    padding: 30px;
     border-radius: 5px;
 }
 .course-item h2 {
@@ -85,27 +85,27 @@ li {
     background-color: #cccccc;
     border-radius: 5px;
     padding: 20px;
-    }
+}
 
 
-    .container form {
+.container form {
     margin-top: 1.5em;
     padding: 20px;
-    } 
+} 
 
-    .form-control {
+.form-control {
     display: flex;
     flex-direction: column;
     margin-bottom: 1em;
-    }
+}
 
-    .form-control label {
+.form-control label {
     font-weight: bold;
     margin-bottom: 0.3em;
-    }
+}
 
-    .form-control input,
-    .form-control textarea {
+.form-control input,
+.form-control textarea {
     padding: 10px;
     border-radius: 5px;
     border: 3px solid #1C2840;
@@ -113,25 +113,25 @@ li {
     background-color: #ccc;
     font-size: medium;
     margin-top: 5px;
-    }
+}
 
-    .form-control-bsp {
+.form-control-bsp {
     margin-bottom: 10px;
-    }
+}
 
 .form-control-invalido {
-border-color: #ff3434;
-border-radius: 5px; 
+    border-color: #ff3434;
+    border-radius: 5px; 
 }
 
 .txt-padrao-bsp {
-margin: 0;
-font-family: inherit;
-line-height: inherit;
-width: 100%;
-padding: 8px;
-font-size: medium;
-color: #10151E;
+    margin: 0;
+    font-family: inherit;
+    line-height: inherit;
+    width: 100%;
+    padding: 8px;
+    font-size: medium;
+    color: #10151E;
 }
 
 .btn-login {
@@ -158,23 +158,48 @@ h1 {
 .span-msg-invalido {
     color: #ff3434;
     font-size: smaller;
-  }
+}
 
-  .form-control-invalido {
+.form-control-invalido {
     border-color: #ff3434;
     border-radius: 5px; 
-  }
+}
   
-  .div-curso {
+.div-curso {
     display: inline-flex;
-  }
+}
 
-  .div-info-curso{
+.div-info-curso, .div-aula-curso{
     display: inline-grid;
-  }
+}
 
-  .img-curso {
-    margin-right: 20px;
-    border: 2px solid;
+.img-curso {
+    margin-right: 25px;
+    /* border: 2px solid; */
     width: 175px;
-  }
+    border-radius: 5px;
+}
+
+.div-aula {
+    width: 100%;
+    height: 500px;
+}
+
+.div-aula-curso{
+    width: 40%;
+    height: 300px;
+    margin-right: 25px;
+}
+
+.container-aula {
+    display: flex;
+    padding: 15px;
+    width: 100%;
+}
+
+.container-visualiza-aula{
+    display: flex;
+    padding: 15px;
+    width: 100%;
+    justify-content: center;
+}

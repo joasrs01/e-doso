@@ -1,37 +1,75 @@
+const inscricaoModel = require("../models/inscricaoModel");
+const aulaModel = require("../models/aulaModel");
+const cursoModel = require("../models/cursoModel");
 
-const Inscricao = require('../models/inscricaoModel');
-const Aulas = require('../models/aulaModel'); // Assuming this exists
-const Curso = require('../models/cursoModel'); // Assuming this exists
-
-exports.inscreverCurso = async (req, res) => {
-  const { cursoDescricao, userId } = req.body;
-
-  try {
-    // Criar uma nova inscrição
-    const novaInscricao = await Inscricao.create({
-      cursoDescricao,
-      userId
+module.exports = class Curso {
+  static async verCursos(req, res) {
+    const cursos = await cursoModel.findAll({ raw: true });
+    res.render("curso/selecionaCurso", {
+      usuarioAutenticado: req.usuario,
+      cursos,
     });
-
-    res.status(201).json({ message: 'Inscrição realizada com sucesso!', novaInscricao });
-  } catch (error) {
-    res.status(500).json({ message: 'Erro ao realizar inscrição', error });
   }
-};
 
-exports.verAulas = async (req, res) => {
-  const { cursoId } = req.params;
+  static async inscreverCurso(req, res) {
+    const { cursoDescricao, userId } = req.body;
 
-  try {
-    // Encontrar o curso e as aulas associadas
-    const curso = await Curso.findByPk(cursoId, { include: Aulas });
+    try {
+      // Criar uma nova inscrição
+      const novaInscricao = await inscricaoModel.create({
+        cursoDescricao,
+        userId,
+      });
 
-    if (!curso) {
-      return res.status(404).json({ message: 'Curso não encontrado' });
+      res
+        .status(201)
+        .json({ message: "Inscrição realizada com sucesso!", novaInscricao });
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao realizar inscrição", error });
     }
+  }
 
-    res.render('curso/aula', { cursoDescricao: curso.descricao, aulas: curso.Aulas });
-  } catch (error) {
-    res.status(500).json({ message: 'Erro ao carregar aulas', error });
+  static async verAulas(req, res) {
+    const cursoId = req.params.cursoId;
+    try {
+      // Encontrar o curso e as aulas associadas
+      const curso = await cursoModel.findOne({
+        raw: true,
+        where: { id: cursoId },
+      });
+      const aulas = await aulaModel.findAll({
+        raw: true,
+        where: { CursoId: cursoId },
+      });
+      if (!curso) {
+        return res
+          .status(404)
+          .json({ message: "Curso ou aulas não encontradas" });
+      }
+
+      res.render("curso/selecionaAula", {
+        curso,
+        aulas,
+        usuarioAutenticado: req.usuario,
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao carregar aulas", error });
+    }
+  }
+
+  static async visualizarAula(req, res) {
+    try {
+      const aulaId = req.params.aulaId;
+      const aula = await aulaModel.findOne({
+        raw: true,
+        where: { id: aulaId },
+      });
+
+      console.log(aula);
+
+      res.render("curso/aula", { usuarioAutenticado: req.usuario, aula: aula });
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao carregar aulas", error });
+    }
   }
 };
