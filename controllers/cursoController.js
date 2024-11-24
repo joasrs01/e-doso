@@ -2,6 +2,7 @@ const inscricaoModel = require("../models/inscricaoModel");
 const aulaModel = require("../models/aulaModel");
 const cursoModel = require("../models/cursoModel");
 const comentarioModel = require("../models/comentarioModel");
+const { Op } = require("sequelize");
 
 module.exports = class Curso {
   static async verCursos(req, res) {
@@ -76,43 +77,59 @@ module.exports = class Curso {
   static async visualizarAula(req, res) {
     try {
       const aulaId = req.params.aulaId;
-      console.log('aulaId:', aulaId);
-  
+      console.log("aulaId:", aulaId);
+
       const aula = await aulaModel.findOne({
         where: { id: aulaId },
+        raw: true,
       });
-  
-      console.log('aula:', aula);
-  
+
       if (!aula) {
         return res.status(404).json({ message: "Aula não encontrada" });
       }
-  
+
       const comentarios = await comentarioModel.findAll({
         where: { AulaId: aulaId },
         order: [["createdAt", "DESC"]],
+        raw: true,
       });
-  
-      console.log('comentarios:', comentarios);
-  
-      // Log dos dados enviados para a view
+
+      const codigoCursoObj = await aulaModel.findOne({
+        where: { id: aulaId },
+        attributes: ["CursoId"],
+        raw: true,
+      });
+
+      let codigoCurso = 0;
+
+      if (codigoCursoObj) {
+        codigoCurso = codigoCursoObj.CursoId;
+      }
+
+      const aulasCurso = await aulaModel.findAll({
+        raw: true,
+        where: { CursoId: codigoCurso, id: { [Op.ne]: aulaId } },
+      });
+
       const dadosView = {
-        aula: aula.get({ plain: true }),
-        comentarios: comentarios.map((c) => c.get({ plain: true })),
+        aula: aula,
+        aulas: aulasCurso,
+        comentarios: comentarios,
+        usuarioAutenticado: req.usuario,
       };
-      console.log('Dados enviados para a view:', dadosView);
-  
-      // Renderizar a view com callback para capturar erros
+
       res.render("curso/aula", dadosView, (err, html) => {
         if (err) {
-          console.error('Erro ao renderizar a view:', err);
-          return res.status(500).send('Erro ao renderizar a página da aula.');
+          console.error("Erro ao renderizar a view:", err);
+          return res.status(500).send("Erro ao renderizar a página da aula.");
         }
         res.send(html);
       });
     } catch (error) {
-      console.error('Erro no método visualizarAula:', error);
-      res.status(500).json({ message: "Erro ao carregar aula", error: error.message });
+      console.error("Erro no método visualizarAula:", error);
+      res
+        .status(500)
+        .json({ message: "Erro ao carregar aula", error: error.message });
     }
-  }  
+  }
 };
