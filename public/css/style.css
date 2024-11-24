@@ -198,8 +198,15 @@ h1 {
 }
 
 .container-visualiza-aula{
-    display: flex;
+    display: block;
     padding: 15px;
     width: 100%;
     justify-content: center;
+}
+
+.container-comentarios {
+    display: block; 
+    margin-top: 20px; 
+    width: 100%;
+    margin-bottom: 20px;
 }

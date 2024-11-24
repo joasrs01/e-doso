@@ -3,39 +3,47 @@
 <div class="container-visualiza-aula">
     <div class="div-visualiza-aula card-padrao" style="display: block; width: 100%;">
         <h1>{{aula.titulo}}</h1>
-        <span>{{aula.descricao}}</span>
-        <iframe width="560" height="315" 
-                src="{{aula.videoUrl}}" 
-                title="YouTube video player" frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; 
-                encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen></iframe>
+        <h5>{{aula.descricao}}</h5>
+        <iframe width="100%" height="400" src="{{aula.videoUrl}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <div class="container-comentarios card-padrao">
+        <h2>Comentários</h2>
+
+        <!-- Formulário para adicionar um novo comentário -->
+        <form action="/comentarios/adicionar" method="POST">
+            <input type="hidden" name="aulaId" value="{{aula.id}}">
+            <input type="text" name="nomeUsuario" placeholder="Seu nome" required>
+            <textarea  name="comentario" rows="4" cols="50" placeholder="Adicione seu comentário" style="width: 100%; resize: none;" required></textarea>
+            <br>
+            <button type="submit" style="margin-top: 10px;">Enviar</button>
+        </form>
+
+        <!-- Exibindo os comentários -->
+        <div class="lista-comentarios" style="margin-top: 20px;">
+            {{#each comentarios}}
+                <div class="comentario" style="margin-bottom: 10px;">
+                    <strong>{{this.nomeUsuario}}</strong> em {{formatDate this.createdAt}}
+                    <p>{{this.comentario}}</p>
+                </div>
+            {{/each}}
+        </div>
     </div>
 </div>
-
-<!-- Exibir o ID da aula para depuração -->
-<p>ID da Aula: {{aula.id}}</p>
-
-<!-- Seção de Comentários (Abaixo do Vídeo) -->
-<div class="container-comentarios card-padrao" style="display: block; margin-top: 20px; width: 100%;">
-    <h2>Comentários</h2>
-
-    <!-- Formulário para adicionar um novo comentário -->
-    <form action="/comentarios/adicionar" method="POST">
-        <input type="hidden" name="aulaId" value="{{aula.id}}">
-        <input type="text" name="nomeUsuario" placeholder="Seu nome" required>
-        <textarea name="comentario" rows="4" cols="50" placeholder="Adicione seu comentário" style="width: 100%;" required></textarea>
-        <br>
-        <button type="submit" style="margin-top: 10px;">Enviar</button>
-    </form>
-
-    <!-- Exibindo os comentários -->
-    <div class="lista-comentarios" style="margin-top: 20px;">
-        {{#each comentarios}}
-            <div class="comentario" style="margin-bottom: 10px;">
-                <strong>{{this.nomeUsuario}}</strong> em {{formatDate this.createdAt}}
-                <p>{{this.comentario}}</p>
+<div class="div-aula container-visualiza-aula">
+        <ul class="course-list">
+        {{#each aulas}}
+            <li class="course-item">
+            <div class="div-curso">
+                <div class="div-info-aula">
+                    <h2>{{this.titulo}}</h2>
+                    <span style="margin-bottom: 20px;">{{this.descricao}}</span>
+                    <a href="/curso/aula/{{this.id}}" class="btn-visualizar">Iniciar</a>
+                </div>
             </div>
+        </li>
         {{/each}}
+    </ul>
     </div>
-</div>
+
+
