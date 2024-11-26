@@ -10,7 +10,15 @@
                 <div class="div-info-curso">
                     <h2>{{this.titulo}}</h2>
                     <span style="margin-bottom: 20px;">{{this.descricao}}</span>
-                    <a href="/curso/visualizarAulas/{{this.id}}" class="btn-visualizar">Visualizar</a>
+                    <div class="btn-visualizar-msg-incricao" style="display: flex;">
+                        <a href="/curso/visualizarAulas/{{this.id}}" class="btn btn-visualizar">Visualizar</a>
+                        {{#if (and ../usuarioAutenticado this.usuarioInscrito)}}
+                        <div id="div-texto-icone" style="background-color: transparent !important; text-alight: center; height: 55px; color:#696969;">
+                            <span style="font-size: larger;">Inscrição realizada</span>
+                            <i class="bi bi-check-lg fs-5"></i>
+                        </div>
+                        {{/if}}
+                    </div>
                 </div>
             </div>
         </li>

@@ -6,6 +6,9 @@ pra rodar o projeto localmente vai precisar dar um npm install, depois node app.
 
 Comandos pra rodar no postgres:
 
+**\*\*** Alteração: dar o update a seguir pra atualizar a url dos videos (isso porque tem que ser um link 'embed' gerado pelo youtube pra funcionar, pra gerar tem que entrar no video clicar em compartilhar e selecionar a opção 'embed', ali ele gera o link certo):
+UPDATE "Aulas" SET "videoUrl" = 'https://www.youtube.com/embed/9QbIuIZMVUw?si=VgRrCVtxML0uNvK7'
+
 DELETE FROM "Cursos";
 DELETE FROM "Aulas";
 

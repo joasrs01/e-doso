@@ -10,9 +10,9 @@
             <div class="form-control-bsp">
                 <input class="txt-padrao-bsp" type="password" name="senha" placeholder="Senha">
             </div>
-            <input class="btn btn-primary btn-login" type="submit" value="Login">
-            {{!-- <div id="msg-login-invalido" {{#if esconderMsgInvalido}} hidden="true" {{/if}}> --}}
-            {{!-- <span style="color:#b62222;">Login ou senha incorretos!</span> --}}
+            <input class="btn btn-login" type="submit" value="Login">
+            <div id="msg-login-invalido" {{#if esconderMsgInvalido}} hidden="true" {{/if}}>
+            <span style="color:#b62222;">Login ou senha incorretos!</span>
             </div>
             <div id="link-nova-conta">
                 <a href="/usuario">ou crie uma conta clicado aqui!</a>

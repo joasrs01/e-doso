@@ -15,4 +15,16 @@ router.get(
   cursoController.visualizarAula
 );
 
+router.get(
+  "/inscricao/add/:cursoId",
+  tokenService.verificarTokenThrow,
+  cursoController.realizarIscricao
+);
+
+router.get(
+  "/inscricao/cancelar/:cursoId",
+  tokenService.verificarTokenThrow,
+  cursoController.cancelarIscricao
+);
+
 module.exports = router;

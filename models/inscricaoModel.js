@@ -1,25 +1,24 @@
+const { DataTypes, Sequelize } = require("sequelize");
+const sequelize = require("../DB/conn");
+const Usuario = require("./usuarioModel");
+const Curso = require("./cursoModel");
 
-const { DataTypes } = require('sequelize');
-const sequelize = require('../DB/conn');
-
-const Inscricao = sequelize.define('Inscricao', {
-  cursoDescricao: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  userId: {
+const Inscricao = sequelize.define("Inscricao", {
+  id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Usuarios', // Nome da tabela de usuários
-      key: 'id'
-    }
-  }
+    primaryKey: true,
+    autoIncrement: true,
+  },
 });
+
+Usuario.belongsToMany(Curso, { through: Inscricao });
+Curso.belongsToMany(Usuario, { through: Inscricao });
 
 Inscricao.sync()
   //.sync({ force: true })
-  .then(() => console.log("Tabela Usuario Sincronizada com sucesso!"))
-  .catch((err) => console.log("erro ao sincronizar a tabela Usuario: " + err));
+  .then(() => console.log("Tabela Inscricao Sincronizada com sucesso!"))
+  .catch((err) =>
+    console.log("erro ao sincronizar a tabela Inscricao: " + err)
+  );
 
 module.exports = Inscricao;

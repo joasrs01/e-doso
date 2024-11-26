@@ -4,9 +4,9 @@ body {
 }
 
 #navbar {
-    background-color: #a2a2a2;
+    background-color: #009767;
     margin: 0px;
-    /* padding: 10px; */
+    padding: 15px;
     display: flex;
     justify-content: space-between;
 }
@@ -17,7 +17,7 @@ body {
 }
 
 #navbar ul li a, .nav-titulo {
-    color: #0022ff;
+    color: #ffffff;
 }
 
 .btn-visualizar, #navbar ul li a, .nav-titulo {
@@ -36,7 +36,7 @@ li {
 }
 
 .li-navbar:hover{
-    border-bottom: 4px solid #0022ff;
+    border-bottom: 4px solid #ffffff;
     /* border-left: 1px solid #0022ff; */
 }
 
@@ -68,7 +68,7 @@ li {
     margin-bottom: 15px;
 }
 .btn-visualizar {
-    background-color: #4CAF50;
+    background-color: #009767;
     color: white;
     font-size: 18px;
     padding: 12px 20px;
@@ -77,8 +77,15 @@ li {
     cursor: pointer;
     width: 125px;
 }
+.btn-cancelar-inscricao {
+    background-color: #d02e2e !important;
+}
+
+.btn-cancelar-inscricao:hover{
+    background-color: #9c2626 !important;
+}
 .enroll-button:hover {
-    background-color: #45a049;
+    background-color: #009767;
 }
 
 .card-padrao {
@@ -139,10 +146,13 @@ li {
     height: 40px;
     font-size: medium;
     margin-bottom: 10px;
+    background-color: #009767;
+    color: #ffffff;
 }
 
 .btn:hover {
-  /* background-color: #3B568B8A !important; */
+  background-color: #006d4b;
+  color: #ffffff;
   position: none;
 }
 
@@ -164,12 +174,12 @@ h1 {
     border-color: #ff3434;
     border-radius: 5px; 
 }
-  
+
 .div-curso {
     display: inline-flex;
 }
 
-.div-info-curso, .div-aula-curso{
+.div-info-curso, .div-aula-curso, .div-info-aula{
     display: inline-grid;
 }
 
@@ -209,4 +219,12 @@ h1 {
     margin-top: 20px; 
     width: 100%;
     margin-bottom: 20px;
+}
+
+
+#div-texto-icone{
+    background-color: grey;
+    height: 55px;
+    border-radius: 5px;
+    padding: 10px;
 }

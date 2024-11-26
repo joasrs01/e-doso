@@ -2,21 +2,37 @@
     <div class="div-aula-curso card-padrao">
       <h1>{{curso.titulo}}</h1>
       <span>{{curso.descricao}}</span>
-      <input type="button" value="Increver-se" class="btn-visualizar">
+      {{#if usuarioAutenticado}}
+        {{#if usuarioInscrito}}
+          <div id="div-usuario-inscrito" style="display: inline-flex; justify-content: space-evenly;">
+            <div id="div-texto-icone" style="background-color: grey; text-alight: center; height: 55px;">
+              <span style="font-size: larger;">Incrição realizada</span>
+              <i class="bi bi-check-lg fs-5"></i>
+            </div>
+            <div id="div-cancelar-inscricao" style="height: 55px;">
+              <a href="/curso/inscricao/cancelar/{{curso.id}}" class="btn btn-visualizar btn-cancelar-inscricao" style="width: 100%; height: 55px;">Cancelar Inscrição</a>
+            </div>
+          </div>
+        {{else}}
+          <a href="/curso/inscricao/add/{{curso.id}}" class="btn btn-visualizar" style="width: 100%; height: 55px;">Se Inscreva!</a>
+        {{/if}}
+      {{else}}
+        <span style="background-color: grey; height: 30px; text-align: center;">Faça o login para poder se inscrever no curso!</span>
+      {{/if}}
     </div>
     <div class="div-aula">
         <ul class="course-list">
         {{#each aulas}}
             <li class="course-item">
-            <div class="div-curso">
                 <div class="div-info-aula">
                     <h2>{{this.titulo}}</h2>
                     <span style="margin-bottom: 20px;">{{this.descricao}}</span>
-                    <a href="/curso/aula/{{this.id}}" class="btn-visualizar">Iniciar</a>
+                    {{#if (and ../usuarioAutenticado ../usuarioInscrito)}}
+                        <a href="/curso/aula/{{this.id}}" class="btn btn-visualizar">Iniciar</a>
+                    {{/if}}
                 </div>
-            </div>
-        </li>
+            </li>
         {{/each}}
-    </ul>
+        </ul>
     </div>
 </div>
