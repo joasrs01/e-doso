@@ -39,4 +39,10 @@ router.get(
   cursoController.removerAvaliacao
 );
 
+router.get(
+  "/cursosUsuario/:cursoId",
+  tokenService.verificarTokenThrow,
+  cursoController.cursosUsuario
+);
+
 module.exports = router;

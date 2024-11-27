@@ -14,8 +14,8 @@
         <h1 style="margin: 0px;"><a class="nav-titulo" href="/">E-doso</a></h1>
         <ul id="ul-navbar" style="margin: 0px;">
             {{#if usuarioAutenticado}}
-                <li class="li-navbar"><a class="nav-titulo" href="/curso">Meus Cursos</a></li>
-                <li class="li-navbar"><a class="nav-titulo" href="/usuario/perfil">{{usuarioAutenticado.userName}}</a></li>
+                <li class="li-navbar"><a class="nav-titulo" href="/curso/cursosUsuario/{{usuarioAutenticado.userId}}">Meus Cursos</a></li>
+                <li class="li-navbar"><a class="nav-titulo" id="nome-usuario" href="/usuario/perfil">{{usuarioAutenticado.userName}}</a></li>
                 <li class="li-navbar"><a class="nav-titulo" href="/usuario/logoff">Logoff</a></li>
             {{else}}
                 <li class="li-navbar"><a class="nav-titulo" href="/curso">Cursos</a></li>

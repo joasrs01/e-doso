@@ -31,29 +31,7 @@ module.exports = class Curso {
     });
 
     if (cursos) {
-      let medias = await avaliacaoModel.findAll({
-        raw: true,
-        attributes: [
-          [
-            Sequelize.literal(
-              'SUM("nivelAvaliacao") / COUNT("nivelAvaliacao")'
-            ),
-            "mediaAvaliacao",
-          ],
-          [Sequelize.literal('COUNT("nivelAvaliacao")'), "qtdAvaliacoes"],
-          "CursoId",
-        ],
-        group: ["CursoId"],
-      });
-
-      if (medias) {
-        cursos.forEach((e) => {
-          let media = medias.find((item) => item.CursoId === e.id);
-
-          e.nivelEstrela = media ? media.mediaAvaliacao : 0;
-          e.qtdAvaliacoes = media ? media.qtdAvaliacoes : 0;
-        });
-      }
+      atribuirAvaliacoesCurso(cursos);
     }
 
     res.render("curso/selecionaCurso", {
@@ -213,6 +191,28 @@ module.exports = class Curso {
 
     voltarPaginaAnterior(req, res);
   }
+
+  static async cursosUsuario(req, res) {
+    const UsuarioId = req.usuario.userId;
+
+    const query = `SELECT "Cursos".* FROM "Cursos" INNER JOIN "Inscricaos" ON "Inscricaos"."CursoId" = "Cursos"."id" WHERE "Inscricaos"."UsuarioId" = ${UsuarioId}`;
+
+    const cursos = await cursoModel.sequelize.query(query, {
+      type: Sequelize.QueryTypes.SELECT,
+      raw: true,
+    });
+
+    if (cursos) {
+      atribuirAvaliacoesCurso(cursos);
+    }
+
+    console.log(cursos);
+
+    res.render("usuario/cursosUsuario", {
+      usuarioAutenticado: req.usuario,
+      cursos,
+    });
+  }
 };
 
 async function verificarUsuarioInscrito(UsuarioId, CursoId) {
@@ -230,5 +230,29 @@ function voltarPaginaAnterior(req, res) {
     res.redirect(paginaAnterior);
   } else {
     res.send("Página anterior não encontrada.");
+  }
+}
+
+async function atribuirAvaliacoesCurso(cursos) {
+  let medias = await avaliacaoModel.findAll({
+    raw: true,
+    attributes: [
+      [
+        Sequelize.literal('SUM("nivelAvaliacao") / COUNT("nivelAvaliacao")'),
+        "mediaAvaliacao",
+      ],
+      [Sequelize.literal('COUNT("nivelAvaliacao")'), "qtdAvaliacoes"],
+      "CursoId",
+    ],
+    group: ["CursoId"],
+  });
+
+  if (medias) {
+    cursos.forEach((e) => {
+      let media = medias.find((item) => item.CursoId === e.id);
+
+      e.nivelEstrela = media ? media.mediaAvaliacao : 0;
+      e.qtdAvaliacoes = media ? media.qtdAvaliacoes : 0;
+    });
   }
 }
