@@ -35,6 +35,8 @@ app.engine(
       },
       or: (a, b) => a || b,
       and: (a, b) => a && b,
+      igual: (a, b) => a == b,
+      maiorOuIgual: (a, b) => a >= b,
     },
   })
 );

@@ -2,6 +2,7 @@ const inscricaoModel = require("../models/inscricaoModel");
 const aulaModel = require("../models/aulaModel");
 const cursoModel = require("../models/cursoModel");
 const comentarioModel = require("../models/comentarioModel");
+const avaliacaoModel = require("../models/avaliacaoModel");
 const { Op, Sequelize } = require("sequelize");
 
 module.exports = class Curso {
@@ -29,6 +30,32 @@ module.exports = class Curso {
       },
     });
 
+    if (cursos) {
+      let medias = await avaliacaoModel.findAll({
+        raw: true,
+        attributes: [
+          [
+            Sequelize.literal(
+              'SUM("nivelAvaliacao") / COUNT("nivelAvaliacao")'
+            ),
+            "mediaAvaliacao",
+          ],
+          [Sequelize.literal('COUNT("nivelAvaliacao")'), "qtdAvaliacoes"],
+          "CursoId",
+        ],
+        group: ["CursoId"],
+      });
+
+      if (medias) {
+        cursos.forEach((e) => {
+          let media = medias.find((item) => item.CursoId === e.id);
+
+          e.nivelEstrela = media ? media.mediaAvaliacao : 0;
+          e.qtdAvaliacoes = media ? media.qtdAvaliacoes : 0;
+        });
+      }
+    }
+
     res.render("curso/selecionaCurso", {
       usuarioAutenticado: req.usuario,
       cursos,
@@ -36,22 +63,22 @@ module.exports = class Curso {
   }
 
   static async verAulas(req, res) {
-    const cursoId = req.params.cursoId;
-    let usuarioId = 0;
+    const CursoId = req.params.cursoId;
+    let UsuarioId = 0;
 
     if (req.usuario) {
-      usuarioId = req.usuario.userId;
+      UsuarioId = req.usuario.userId;
     }
 
     try {
       const curso = await cursoModel.findOne({
         raw: true,
-        where: { id: cursoId },
+        where: { id: CursoId },
       });
 
       const aulas = await aulaModel.findAll({
         raw: true,
-        where: { CursoId: cursoId },
+        where: { CursoId },
       });
 
       if (!curso) {
@@ -61,15 +88,23 @@ module.exports = class Curso {
       }
 
       const usuarioInscrito = await verificarUsuarioInscrito(
-        usuarioId,
-        cursoId
+        UsuarioId,
+        CursoId
       );
+
+      const avaliacaoUsuario = await avaliacaoModel.findOne({
+        where: { UsuarioId, CursoId },
+        raw: true,
+      });
+
+      console.log(avaliacaoUsuario);
 
       res.render("curso/selecionaAula", {
         usuarioAutenticado: req.usuario,
         curso,
         aulas,
         usuarioInscrito,
+        avaliacaoUsuario,
       });
     } catch (error) {
       res.status(500).json({ message: "Erro ao carregar aulas", error });
@@ -140,13 +175,7 @@ module.exports = class Curso {
 
     await inscricaoModel.create({ UsuarioId, CursoId });
 
-    const paginaAnterior = req.get("Referer");
-
-    if (paginaAnterior) {
-      res.redirect(paginaAnterior);
-    } else {
-      res.send("Página anterior não encontrada.");
-    }
+    voltarPaginaAnterior(req, res);
   }
 
   static async cancelarIscricao(req, res) {
@@ -155,13 +184,34 @@ module.exports = class Curso {
 
     await inscricaoModel.destroy({ where: { UsuarioId, CursoId } });
 
-    const paginaAnterior = req.get("Referer");
+    voltarPaginaAnterior(req, res);
+  }
 
-    if (paginaAnterior) {
-      res.redirect(paginaAnterior);
-    } else {
-      res.send("Página anterior não encontrada.");
-    }
+  static async adicionarAvaliacao(req, res) {
+    console.log(req.body);
+
+    const UsuarioId = req.usuario.userId;
+    const CursoId = req.body.aula;
+    const nivelAvaliacao = req.body.star;
+    const comentario = req.body.comentario;
+
+    await avaliacaoModel.create({
+      comentario,
+      nivelAvaliacao,
+      UsuarioId,
+      CursoId,
+    });
+
+    voltarPaginaAnterior(req, res);
+  }
+
+  static async removerAvaliacao(req, res) {
+    const UsuarioId = req.usuario.userId;
+    const CursoId = req.params.cursoId;
+
+    await avaliacaoModel.destroy({ where: { UsuarioId, CursoId } });
+
+    voltarPaginaAnterior(req, res);
   }
 };
 
@@ -171,4 +221,14 @@ async function verificarUsuarioInscrito(UsuarioId, CursoId) {
       where: { CursoId, UsuarioId },
     })) > 0
   );
+}
+
+function voltarPaginaAnterior(req, res) {
+  const paginaAnterior = req.get("Referer");
+
+  if (paginaAnterior) {
+    res.redirect(paginaAnterior);
+  } else {
+    res.send("Página anterior não encontrada.");
+  }
 }

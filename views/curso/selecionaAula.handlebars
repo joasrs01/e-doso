@@ -1,23 +1,46 @@
 <div class="container-aula">
-    <div class="div-aula-curso card-padrao">
-      <h1>{{curso.titulo}}</h1>
-      <span>{{curso.descricao}}</span>
-      {{#if usuarioAutenticado}}
-        {{#if usuarioInscrito}}
-          <div id="div-usuario-inscrito" style="display: inline-flex; justify-content: space-evenly;">
-            <div id="div-texto-icone" style="background-color: grey; text-alight: center; height: 55px;">
-              <span style="font-size: larger;">Incrição realizada</span>
-              <i class="bi bi-check-lg fs-5"></i>
+    <div class="div-grade-1">
+      <div class="div-aula-curso card-padrao">
+        <h1>{{curso.titulo}}</h1>
+        <span>{{curso.descricao}}</span>
+        {{#if usuarioAutenticado}}
+          {{#if usuarioInscrito}}
+            <div id="div-usuario-inscrito" style="display: inline-flex; justify-content: space-evenly;">
+              <div id="div-texto-icone" style="background-color: grey; text-alight: center; height: 55px;">
+                <span style="font-size: larger;">Incrição realizada</span>
+                <i class="bi bi-check-lg fs-5"></i>
+              </div>
+              <div id="div-cancelar-inscricao" style="height: 55px;">
+                <a href="/curso/inscricao/cancelar/{{curso.id}}" class="btn btn-visualizar btn-cancelar-inscricao" style="width: 100%; height: 55px;">Cancelar Inscrição</a>
+              </div>
             </div>
-            <div id="div-cancelar-inscricao" style="height: 55px;">
-              <a href="/curso/inscricao/cancelar/{{curso.id}}" class="btn btn-visualizar btn-cancelar-inscricao" style="width: 100%; height: 55px;">Cancelar Inscrição</a>
-            </div>
-          </div>
+          {{else}}
+            <a href="/curso/inscricao/add/{{curso.id}}" class="btn btn-visualizar" style="width: 100%; height: 55px;">Se Inscreva!</a>
+          {{/if}}
         {{else}}
-          <a href="/curso/inscricao/add/{{curso.id}}" class="btn btn-visualizar" style="width: 100%; height: 55px;">Se Inscreva!</a>
+          <span style="background-color: grey; height: 30px; text-align: center;">Faça o login para poder se inscrever no curso!</span>
         {{/if}}
-      {{else}}
-        <span style="background-color: grey; height: 30px; text-align: center;">Faça o login para poder se inscrever no curso!</span>
+      </div>
+      {{#if (and usuarioAutenticado usuarioInscrito)}}
+        <div class="container-avaliacao card-padrao" style="margin-top: 20px; width: 100%;">
+          <label>Avalie o curso:</label>
+            <form action="/curso/avaliacao/add" id="form-avaliacao" method="POST">
+                <input type="hidden" name="aula" value="{{curso.id}}">
+                <div class="rating div-avaliacao">
+                  <input {{#if avaliacaoUsuario}} disabled {{/if}} type="radio" {{#if ( and avaliacaoUsuario ( igual avaliacaoUsuario.nivelAvaliacao 5 ) ) }} checked="true" {{/if}} name="star" id="star1" value="5"><label class="ipt-label-avaliacao {{#if avaliacaoUsuario}} {{#if ( maiorOuIgual avaliacaoUsuario.nivelAvaliacao 5 ) }} ipt-label-after ipt-label-before {{else}} ipt-label-before {{/if}} {{else}} ipt-label-before ipt-label-after {{/if}}"  for="star1"></label>
+                  <input {{#if avaliacaoUsuario}} disabled {{/if}} type="radio" {{#if ( and avaliacaoUsuario ( igual avaliacaoUsuario.nivelAvaliacao 4 ) ) }} checked="true" {{/if}}  name="star" id="star2" value="4"><label class="ipt-label-avaliacao {{#if avaliacaoUsuario}} {{#if ( maiorOuIgual avaliacaoUsuario.nivelAvaliacao 4 ) }} ipt-label-after {{else}} ipt-label-before {{/if}} {{else}} ipt-label-before ipt-label-after {{/if}}"  for="star2"></label>
+                  <input {{#if avaliacaoUsuario}} disabled {{/if}} type="radio" {{#if ( and avaliacaoUsuario ( igual avaliacaoUsuario.nivelAvaliacao 3 ) ) }} checked="true" {{/if}}  name="star" id="star3" value="3"><label class="ipt-label-avaliacao {{#if avaliacaoUsuario}} {{#if ( maiorOuIgual avaliacaoUsuario.nivelAvaliacao 3 ) }} ipt-label-after {{else}} ipt-label-before {{/if}} {{else}} ipt-label-before ipt-label-after {{/if}}"  for="star3"></label>
+                  <input {{#if avaliacaoUsuario}} disabled {{/if}} type="radio" {{#if ( and avaliacaoUsuario ( igual avaliacaoUsuario.nivelAvaliacao 2 ) ) }} checked="true" {{/if}}  name="star" id="star4" value="2"><label class="ipt-label-avaliacao {{#if avaliacaoUsuario}} {{#if ( maiorOuIgual avaliacaoUsuario.nivelAvaliacao 2 ) }} ipt-label-after {{else}} ipt-label-before {{/if}} {{else}} ipt-label-before ipt-label-after {{/if}}"  for="star4"></label>
+                  <input {{#if avaliacaoUsuario}} disabled {{/if}} type="radio" {{#if ( and avaliacaoUsuario ( igual avaliacaoUsuario.nivelAvaliacao 1 ) ) }} checked="true" {{/if}}  name="star" id="star5" value="1"><label class="ipt-label-avaliacao {{#if avaliacaoUsuario}} {{#if ( maiorOuIgual avaliacaoUsuario.nivelAvaliacao 1 ) }} ipt-label-after {{else}} ipt-label-before {{/if}} {{else}} ipt-label-before ipt-label-after {{/if}}"  for="star5"></label>
+                </div>
+                <textarea {{#if avaliacaoUsuario}} disabled {{/if}}  style="width: 100%; height: 100px; resize: none;" placeholder="Digite um comentário aqui!" name="comentario" id="">{{#if avaliacaoUsuario}} {{avaliacaoUsuario.comentario}} {{/if}}</textarea>
+                {{#if avaliacaoUsuario}} 
+                  <a href="/curso/avaliacao/remover/{{curso.id}}" class="btn btn-visualizar btn-cancelar-inscricao" style="width: 70%; margin-top: 10px">Remover avaliação</a>
+                {{else}}
+                  <input type="submit" value="Avaliar" class="btn btn-visualizar" style="margin-top: 10px;">
+                {{/if}}
+            </form>
+        </div>
       {{/if}}
     </div>
     <div class="div-aula">

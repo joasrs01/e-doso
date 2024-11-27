@@ -27,4 +27,16 @@ router.get(
   cursoController.cancelarIscricao
 );
 
+router.post(
+  "/avaliacao/add",
+  tokenService.verificarTokenThrow,
+  cursoController.adicionarAvaliacao
+);
+
+router.get(
+  "/avaliacao/remover/:cursoId",
+  tokenService.verificarTokenThrow,
+  cursoController.removerAvaliacao
+);
+
 module.exports = router;
