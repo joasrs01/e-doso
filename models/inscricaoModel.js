@@ -14,8 +14,8 @@ const Inscricao = sequelize.define("Inscricao", {
 Usuario.belongsToMany(Curso, { through: Inscricao });
 Curso.belongsToMany(Usuario, { through: Inscricao });
 
-Inscricao.sync()
-  //.sync({ force: true })
+// Inscricao.sync()
+Inscricao.sync({ force: true })
   .then(() => console.log("Tabela Inscricao Sincronizada com sucesso!"))
   .catch((err) =>
     console.log("erro ao sincronizar a tabela Inscricao: " + err)

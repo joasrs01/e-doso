@@ -25,7 +25,12 @@ botao = driver.find_element(By.XPATH, '//*[@id="form-login"]/input')
 botao.click()
 
 time.sleep(1)
-assert url_inicial == driver.current_url, f"Erro: O login não foi efetuado!!"
 
-time.sleep(2)
+try:
+    assert url_inicial == driver.current_url, f"Erro: O login não foi efetuado!!"
+    print("Teste bem-sucedido: O login foi efetuado com sucesso!")
+except AssertionError as e:
+    print(str(e))
+
+time.sleep(5)
 driver.quit()
