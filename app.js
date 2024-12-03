@@ -6,6 +6,7 @@ const { engine } = require("express-handlebars");
 
 const app = express();
 const porta = 3000;
+const configRouter = require("./routers/configRouter"); 
 const usuarioRouter = require("./routers/usuarioRouter");
 const cursoRouter = require("./routers/cursoRouter");
 const tokenService = require("./controllers/tokenService");
@@ -54,6 +55,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/usuario", usuarioRouter);
 app.use("/curso", cursoRouter);
 app.use("/", comentarioRoutes);
+app.use("/config", configRouter);
 
 app.get("/", tokenService.verificarToken, (req, res) => {
   //res.send("Olá servidor!");

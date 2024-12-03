@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuração de Cursos e Aulas</title>
+    <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Configuração de Cursos e Aulas</h1>
+    </header>
+    <main>
+        <section id="courses-section">
+            <h2>Cursos</h2>
+            <button id="add-course-btn">Adicionar Curso</button>
+            <ul id="courses-list">
+                {{#each courses}}
+                <li>
+                    <span>{{this.name}}</span>
+                    <button class="edit-course-btn" data-id="{{this.id}}">Editar</button>
+                    <button class="delete-course-btn" data-id="{{this.id}}">Excluir</button>
+                </li>
+                {{/each}}
+            </ul>
+        </section>
+        <section id="lessons-section">
+            <h2>Aulas</h2>
+            <button id="add-lesson-btn">Adicionar Aula</button>
+            <ul id="lessons-list">
+                {{#each lessons}}
+                <li>
+                    <span>{{this.title}}</span>
+                    <button class="edit-lesson-btn" data-id="{{this.id}}">Editar</button>
+                    <button class="delete-lesson-btn" data-id="{{this.id}}">Excluir</button>
+                </li>
+                {{/each}}
+            </ul>
+        </section>
+    </main>
+    <script src="/public/scripts/config.js"></script>
+</body>
+</html>

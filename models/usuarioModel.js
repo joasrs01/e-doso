@@ -20,6 +20,11 @@ const Usuario = conexao.define("Usuario", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "user", // Valor padrão para novos usuários
+  },
 });
 
 Usuario.sync()
